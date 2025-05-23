@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class WitnessReports extends Controller
 {
@@ -14,9 +16,14 @@ class WitnessReports extends Controller
             'phone_number' => 'required|numeric',
         ]);
 
-        $JsonResponse = Http::get('https://api.fbi.gov/wanted/v1/list');
+        $content = "Name: {$request->name}\nPhone: {$request->phone_number}\n---\n";
+        $id = Str::random(8);
+
+        Storage::disk('local')->append("{$request->name}-{$id}.txt", $content);
+
+        /*$JsonResponse = Http::get('https://api.fbi.gov/wanted/v1/list');
         $response = json_decode($JsonResponse);
 
-        return response()->json($response);
+        return response()->json($response);*/
     }
 }
