@@ -13,7 +13,7 @@ class WitnessReports extends Controller
     {
         $request->validate([
             'name' => 'required|string',
-            'phone_number' => 'required|numeric',
+            'phone_number' => ['required', 'phone'],  //checking phone with: propaganistas/laravel-phone
         ]);
 
         $content = "Name: {$request->name}\nPhone: {$request->phone_number}\n---\n";
@@ -26,6 +26,8 @@ class WitnessReports extends Controller
         $JsonResponse = Http::get("https://api.fbi.gov/wanted/v1/list?title={$urlString}");
         $response = json_decode($JsonResponse);
 
-        return response()->json($response);
+       /* return response()->json([
+            'Active cases' => $response->total,
+        ]);*/
     }
 }
