@@ -18,12 +18,14 @@ class WitnessReports extends Controller
 
         $content = "Name: {$request->name}\nPhone: {$request->phone_number}\n---\n";
         $id = Str::random(8);
+        $separatedString = explode(' ', $request->name);
+        $urlString = implode('+', $separatedString);
 
         Storage::disk('local')->append("{$request->name}-{$id}.txt", $content);
 
-        /*$JsonResponse = Http::get('https://api.fbi.gov/wanted/v1/list');
+        $JsonResponse = Http::get("https://api.fbi.gov/wanted/v1/list?title={$urlString}");
         $response = json_decode($JsonResponse);
 
-        return response()->json($response);*/
+        return response()->json($response);
     }
 }
