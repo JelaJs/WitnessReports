@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ReportRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
@@ -9,13 +10,8 @@ use Illuminate\Support\Str;
 
 class WitnessReports extends Controller
 {
-    public function index(Request $request)
+    public function index(ReportRequest $request)
     {
-        $request->validate([
-            'name' => 'required|string',
-            'phone_number' => ['required', 'phone'],  //checking phone with: propaganistas/laravel-phone
-        ]);
-
         $content = "Name: {$request->name}\nPhone: {$request->phone_number}\n---\n";
         $id = Str::random(8);
         $separatedString = explode(' ', $request->name);
