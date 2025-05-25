@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Facades\ResponseFacade;
 use App\Http\Requests\ReportRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -18,7 +19,7 @@ class WitnessReports extends Controller
         $urlString = implode('+', $separatedString);
         $ipAddress = $request->ip();
 
-        $locationJson = Http::get("http://ip-api.com/json/{$ipAddress}");
+        $locationJson = Http::get("http://ip-api.com/json/109.245.97.108");
         $location = json_decode($locationJson);
 
         Storage::disk('local')->append("{$request->name}-{$id}.txt", $content);
@@ -26,10 +27,12 @@ class WitnessReports extends Controller
         $JsonResponse = Http::get("https://api.fbi.gov/wanted/v1/list?title={$urlString}");
         $response = json_decode($JsonResponse);
 
-       return response()->json([
-           'Active cases' => $response->total,
-           'User Country' => $location->country,
-           'User City' => $location->city,
-        ]);
+        return ResponseFacade::jsonSuccess(
+            data: [
+                'Active cases' => $response->total,
+                'User Country' => $location->country,
+                'User City' => $location->city,
+            ],
+        );
     }
 }
