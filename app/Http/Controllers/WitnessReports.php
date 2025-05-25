@@ -7,10 +7,6 @@ use App\Http\Requests\ReportRequest;
 use App\Services\ActiveCaseService;
 use App\Services\CreateFileService;
 use App\Services\UserLocationService;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 class WitnessReports extends Controller
 {
