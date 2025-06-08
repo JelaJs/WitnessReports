@@ -12,3 +12,4 @@ We check if the reported person matches a case in the FBI Most Wanted database u
 
 We validate the user's phone number and their location.
 
+For handling responses, I built a custom Response facade to allow for better structure and easier maintenance in the future.
